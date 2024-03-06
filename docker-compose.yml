@@ -1,0 +1,60 @@
+version: '3'
+services:
+    remindme-api:
+        container_name: remindme-api
+        build:
+            context: .
+            dockerfile: Dockerfile
+        restart: always
+        env_file:
+            - .env
+        command: npm run dev
+        volumes:
+            - .:/home/node/app/
+            - /home/node/app/node_modules
+        ports:
+            - 3000:3000
+        networks:
+            - remindme-network
+        depends_on:
+            - mysql-db
+
+    mysql-db:
+        container_name: mysql-db
+        image: mysql 
+        env_file:
+        - .env
+        environment:
+            MYSQL_DB: ${DB_NAME}
+            MYSQL_USER: ${DB_USER}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+        networks: 
+        - remindme-network
+        ports:
+        - "3307:3306"
+        restart: always
+        volumes:
+        - ./data/mysql_data:/var/lib/mysql
+
+    redis-db:
+        container_name: redis-db
+        image: redis:alpine
+        networks:
+        - remindme-network
+        ports:
+        - "6379:6379"
+        restart: always
+        volumes:
+        - ./data/redis_data:/data
+        env_file:
+            - .env
+        environment:
+            REDIS_HOST: ${REDIS_HOST}
+            REDIS_PORT: ${REDIS_PORT}
+
+networks:
+    remindme-network:
+        driver: bridge
+volumes:
+    mysql_data:
+    redis_data:
