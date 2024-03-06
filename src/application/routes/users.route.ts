@@ -1,8 +1,7 @@
-import { type Request, type Response, type Router } from 'express'
-import { makeAddUserController } from '../factories/controllers/user/add.user.factory'
+import { type Router } from 'express'
+import { routerAdapter } from '../adapters/router.adapter'
+import { AddUserControllerFactory } from '../factories/controllers/user/add.user.factory'
 
 export default (route: Router): void => {
-    route.get('/users', async (req: Request, res: Response) => {
-        await makeAddUserController().handle(req, res)
-    })
+    route.post('/users', routerAdapter(AddUserControllerFactory()))
 }

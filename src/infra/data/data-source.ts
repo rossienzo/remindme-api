@@ -8,7 +8,7 @@ const getFiles = (dir: 'entities' | 'migrations'): string[] => {
     let pathDir = ''
 
     if (dir === 'entities') {
-        pathDir = path.join(__dirname, '..', '..', dir)
+        pathDir = path.join(__dirname, '..', '..', 'domain', dir)
     } else if (dir === 'migrations') {
         pathDir = path.join(__dirname, dir)
     }

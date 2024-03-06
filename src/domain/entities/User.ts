@@ -4,7 +4,7 @@ import { RemindMessage } from './RemindMessage'
 @Entity({ name: 'user' })
 export class User {
     @PrimaryGeneratedColumn('uuid')
-        id: string
+        id?: string
 
     @Column({ type: 'varchar', length: 255 })
         name: string
@@ -19,8 +19,8 @@ export class User {
         createdAt: Date
 
     @UpdateDateColumn({ name: 'upload_at', type: 'timestamp' })
-        updatedAt: Date
+        updatedAt?: Date
 
     @OneToMany(() => RemindMessage, remindMessage => remindMessage.user)
-        remindMessages: RemindMessage[]
+        remindMessages?: RemindMessage[]
 }
