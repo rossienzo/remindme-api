@@ -4,6 +4,6 @@
     ],
     "ext": "ts",
     "ignore": ["*.test.ts", "*.spec.ts"],
-    "delay": "3",
+    "delay": "2",
     "exec": "ts-node --transpile-only ./src/server.ts"
 }
