@@ -3,6 +3,7 @@ import { env } from './env'
 import setupMiddlewares from './middlewares'
 import setupRoutes from './routes'
 import AppDataSource from '../data/data-source'
+import swagger from './swagger'
 
 export class App {
     public port: number
@@ -11,6 +12,7 @@ export class App {
     constructor (port?: number) {
         this.app = express()
         this.port = port ?? Number(env.PORT)
+        swagger(this.app)
         setupMiddlewares(this.app)
         setupRoutes(this.app)
     }

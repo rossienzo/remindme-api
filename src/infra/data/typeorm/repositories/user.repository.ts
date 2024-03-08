@@ -23,6 +23,6 @@ export class UserRepositoryTypeORM implements AddUserRepository, FindByEmailUser
     }
 
     async findByEmail (email: string): Promise<boolean> {
-        return await this.repository.findOne({ where: { email } }) !== undefined
+        return await this.repository.findOne({ where: { email } }) !== null
     }
 }
