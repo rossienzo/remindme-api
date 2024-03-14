@@ -1,7 +1,7 @@
 import type { User } from '../../../domain/entities/User'
 import { type UseCase } from '../../../domain/protocols/usecase.protocol'
 import { randomUUID } from 'crypto'
-import { type AddUserRepository } from '../../repositories/user/protocols/add.user.repository.procol'
+import { type AddUserRepository } from '../../repositories/user/protocols/add.user.repository.protocol'
 import { type FindByEmailUserRepository } from '../../repositories/user/protocols/find-by-email.user.repository.protocol'
 import { AlreadyExistsError } from '../../helpers/errors/alerady-exists.error'
 import { type Hasher } from '../../protocols/cryptography/hasher.protocol'
