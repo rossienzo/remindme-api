@@ -4,6 +4,7 @@ import setupMiddlewares from './middlewares'
 import setupRoutes from './routes'
 import AppDataSource from '../data/data-source'
 import swagger from './swagger'
+import { MainSeeder } from '../data/seeds/main-seeder'
 
 export class App {
     public port: number
@@ -19,6 +20,9 @@ export class App {
 
     async init (): Promise<void> {
         await AppDataSource.initialize()
+            .then(async (db) => {
+                await new MainSeeder().run(db)
+            })
         this.app.listen(this.port, () => { console.log(`Server running at http://localhost:${this.port}`) })
     }
 }

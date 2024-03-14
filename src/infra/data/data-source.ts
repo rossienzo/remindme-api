@@ -3,6 +3,7 @@ import path from 'path'
 import { type SeederOptions } from 'typeorm-extension'
 import { readdirSync } from 'fs'
 import { env } from '../config/env'
+import { MainSeeder } from './seeds/main-seeder'
 
 const getFiles = (dir: 'entities' | 'migrations'): string[] => {
     let pathDir = ''
@@ -24,6 +25,7 @@ export const optionsDataSource: DataSourceOptions & SeederOptions = ({
     url: env.DB_URL,
     entities: getFiles('entities'),
     migrations: getFiles('migrations'),
+    seeds: [MainSeeder],
     seedTracking: false,
     synchronize: env.NODE_ENV !== 'production'
 })
