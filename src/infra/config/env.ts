@@ -10,5 +10,6 @@ if (isTesting) {
 export const env = {
     NODE_ENV: process.env.NODE_ENV ?? 'development',
     PORT: process.env.PORT ?? 3000,
-    DB_URL: process.env.DB_URL ?? 'postgres://postgres:docker@localhost:5432/db_test'
+    DB_URL: process.env.DB_URL ?? 'postgres://postgres:docker@localhost:5432/db_test',
+    JWT_SECRET: process.env.JWT_SECRET
 }
