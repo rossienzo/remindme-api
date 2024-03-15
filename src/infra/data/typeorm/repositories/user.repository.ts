@@ -5,8 +5,10 @@ import { type AddUserRepository } from '../../../../application/repositories/use
 import { type GetUserRepository } from '../../../../application/repositories/user/protocols/get.user.repository.protocol'
 import { type GetByEmailUserRepository } from '../../../../application/repositories/user/protocols/get-by-email.user.repository.protocol'
 import { type GetByIdUserRepository } from '../../../../application/repositories/user/protocols/get-by-id.user.repository.protocol'
+import { type UpdateUserRepository } from '../../../../application/repositories/user/protocols/update.user.repository.protocol'
 
-export class UserRepositoryTypeORM implements AddUserRepository, GetByEmailUserRepository, GetUserRepository, GetByIdUserRepository {
+export class UserRepositoryTypeORM implements AddUserRepository,
+    GetByEmailUserRepository, GetUserRepository, GetByIdUserRepository, UpdateUserRepository {
     private readonly repository: Repository<ObjectLiteral>
 
     constructor () {
@@ -46,5 +48,15 @@ export class UserRepositoryTypeORM implements AddUserRepository, GetByEmailUserR
         }
 
         return null
+    }
+
+    async update (id: string, data: User): Promise<boolean> {
+        const updatedUser = await this.repository.update(id, data)
+
+        if (updatedUser.affected === 1) {
+            return true
+        }
+
+        return false
     }
 }

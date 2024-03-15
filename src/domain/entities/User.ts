@@ -18,7 +18,7 @@ export class User {
         password: string
 
     @CreateDateColumn({ name: 'created_at', type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-        createdAt: Date
+        createdAt?: Date
 
     @UpdateDateColumn({ name: 'upload_at', type: 'timestamp' })
         updatedAt?: Date
