@@ -25,7 +25,7 @@ export class UserRepositoryTypeORM implements AddUserRepository, GetByEmailUserR
     }
 
     async get (): Promise<User[]> {
-        return await this.repository.find() as User[]
+        return await this.repository.find({ order: { createdAt: 'ASC' } }) as User[]
     }
 
     async getById (id: string): Promise<User | null> {
