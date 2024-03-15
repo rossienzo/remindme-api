@@ -4,6 +4,7 @@ import { AddUserControllerFactory } from '../factories/controllers/user/add.user
 import { GetUserControllerFactory } from '../factories/controllers/user/get.user.factory'
 import { auth } from '../../infra/middlewares/auth'
 import { GetByIdUserControllerFactory } from '../factories/controllers/user/get-by-id.user.factory'
+import { UpdateUserControllerFactory } from '../factories/controllers/user/update.user.factory'
 
 export default (route: Router): void => {
     /**
@@ -74,4 +75,35 @@ export default (route: Router): void => {
      *         $ref: '#/components/ServerError'
      */
     route.post('/users', routerAdapter(AddUserControllerFactory()))
+
+    /**
+     * @swagger
+     * /users/{id}:
+     *   put:
+     *     summary: Atualiza um usuário
+     *     tags: [User]
+     *     parameters:
+     *      - name: id
+     *        in: path
+     *        description: ID do usuário
+     *        required: true
+     *        schema:
+     *          type: string
+     *     security:
+     *       - bearerAuth: []
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             $ref: '#/components/schemas/UserParam'
+     *     responses:
+     *       204:
+     *         description: Atualiza um usuário
+     *       400:
+     *         $ref: '#/components/BadRequest'
+     *       500:
+     *         $ref: '#/components/ServerError'
+     */
+    route.put('/users/:id', routerAdapter(UpdateUserControllerFactory()))
 }
