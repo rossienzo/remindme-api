@@ -3,6 +3,7 @@ import { routerAdapter } from '../adapters/router.adapter'
 import { AddUserControllerFactory } from '../factories/controllers/user/add.user.factory'
 import { GetUserControllerFactory } from '../factories/controllers/user/get.user.factory'
 import { auth } from '../../infra/middlewares/auth'
+import { GetByIdUserControllerFactory } from '../factories/controllers/user/get-by-id.user.factory'
 
 export default (route: Router): void => {
     /**
@@ -24,6 +25,31 @@ export default (route: Router): void => {
      *                 $ref: '#/components/schemas/User'
      */
     route.get('/users', auth, routerAdapter(GetUserControllerFactory()))
+
+    /**
+     * @swagger
+     * /users/{id}:
+     *   get:
+     *     summary: Retorna um usuário pelo id
+     *     tags: [User]
+     *     parameters:
+     *      - name: id
+     *        in: path
+     *        description: ID do usuário
+     *        required: true
+     *        schema:
+     *          type: string
+     *     security:
+     *       - bearerAuth: []
+     *     responses:
+     *       200:
+     *         description: Retorna um usuário pelo id
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/User'
+     */
+    route.get('/users/:id', auth, routerAdapter(GetByIdUserControllerFactory()))
 
     /**
      * @swagger

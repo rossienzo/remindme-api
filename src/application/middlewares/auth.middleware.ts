@@ -22,7 +22,7 @@ export class AuthMiddleware implements Middleware {
         try {
             if (accessToken) {
                 const decryptedData = await this.decrypter.decrypt(accessToken)
-                console.log(decryptedData)
+
                 if (decryptedData) {
                     const user = await this.getByTokenAuthenticationRepository.getByToken(accessToken, this.role)
 
