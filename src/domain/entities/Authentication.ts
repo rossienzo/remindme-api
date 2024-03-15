@@ -15,7 +15,7 @@ export class Authentication {
     @UpdateDateColumn({ name: 'upload_at', type: 'timestamp' })
         updatedAt?: Date
 
-    @OneToOne(() => User, user => user.authentication, { cascade: true })
+    @OneToOne(() => User, user => user.authentication, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
     @JoinColumn({ name: 'user_id' })
         user?: User
 }
