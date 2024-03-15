@@ -7,6 +7,7 @@ import { UserRepositoryTypeORM } from '../../../../infra/data/typeorm/repositori
 import { LoginController } from '../../../controllers/login/login.controller'
 import { LoginUseCase } from '../../../usecases/login/login.user.usecase'
 import { logControllerFactory } from '../log/add-error.log.factory'
+import { loginValidationFactory } from './login.controller.validation.factory'
 
 export const LoginControllerFactory = (): Controller => {
     const comparer = new BcryptAdapter()
@@ -14,6 +15,6 @@ export const LoginControllerFactory = (): Controller => {
     const userRepo = new UserRepositoryTypeORM()
     const authenticationRepository = new AuthenticationRepositoryTypeORM()
     const login = new LoginUseCase(userRepo, authenticationRepository, authenticationRepository, authenticationRepository, comparer, encrypter)
-    const loginController = new LoginController(login)
+    const loginController = new LoginController(login, loginValidationFactory())
     return logControllerFactory(loginController)
 }

@@ -1,7 +1,7 @@
 import Joi from 'joi'
 import { JoiAdapter } from '../../../../infra/validation/joi.adapter'
 
-export const addUserValidation = (): JoiAdapter => {
+export const addUserValidationFactory = (): JoiAdapter => {
     const schema = Joi.object({
         name: Joi.string().required().min(3).max(100),
         email: Joi.string().email().required().min(5).max(200),
