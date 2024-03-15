@@ -1,4 +1,4 @@
-export const authSchema = {
+export const AuthSchema = {
     type: 'http',
     scheme: 'bearer',
     bearerFormat: 'JWT'

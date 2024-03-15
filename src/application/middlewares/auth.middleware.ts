@@ -19,18 +19,22 @@ export class AuthMiddleware implements Middleware {
     async handle (request: AuthMiddlewareRequest): Promise<HttpResponse> {
         const { accessToken } = request
 
-        if (accessToken) {
-            const decryptedData = await this.decrypter.decrypt(accessToken)
+        try {
+            if (accessToken) {
+                const decryptedData = await this.decrypter.decrypt(accessToken)
+                console.log(decryptedData)
+                if (decryptedData) {
+                    const user = await this.getByTokenAuthenticationRepository.getByToken(accessToken, this.role)
 
-            if (decryptedData) {
-                const user = await this.getByTokenAuthenticationRepository.getByToken(accessToken, this.role)
-
-                if (user) {
-                    return ok({ userId: user.id })
+                    if (user) {
+                        return ok({ userId: user.id })
+                    }
                 }
             }
-        }
 
-        return forbidden(new AccessDeniedError())
+            return forbidden(new AccessDeniedError())
+        } catch (error) {
+            return forbidden(new AccessDeniedError())
+        }
     }
 }
