@@ -5,6 +5,7 @@ import { GetUserControllerFactory } from '../factories/controllers/user/get.user
 import { auth } from '../../infra/middlewares/auth'
 import { GetByIdUserControllerFactory } from '../factories/controllers/user/get-by-id.user.factory'
 import { UpdateUserControllerFactory } from '../factories/controllers/user/update.user.factory'
+import { DeleteUserControllerFactory } from '../factories/controllers/user/delete.user.factory'
 
 export default (route: Router): void => {
     /**
@@ -106,4 +107,29 @@ export default (route: Router): void => {
      *         $ref: '#/components/ServerError'
      */
     route.put('/users/:id', routerAdapter(UpdateUserControllerFactory()))
+
+    /**
+     * @swagger
+     * /users/{id}:
+     *   delete:
+     *     summary: Remove um usuário
+     *     tags: [User]
+     *     parameters:
+     *      - name: id
+     *        in: path
+     *        description: ID do usuário
+     *        required: true
+     *        schema:
+     *          type: string
+     *     security:
+     *       - bearerAuth: []
+     *     responses:
+     *       204:
+     *         description: Usuário removido com sucesso
+     *       400:
+     *         $ref: '#/components/BadRequest'
+     *       500:
+     *         $ref: '#/components/ServerError'
+     */
+    route.delete('/users/:id', routerAdapter(DeleteUserControllerFactory()))
 }

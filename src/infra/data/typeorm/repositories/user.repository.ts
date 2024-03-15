@@ -6,9 +6,10 @@ import { type GetUserRepository } from '../../../../application/repositories/use
 import { type GetByEmailUserRepository } from '../../../../application/repositories/user/protocols/get-by-email.user.repository.protocol'
 import { type GetByIdUserRepository } from '../../../../application/repositories/user/protocols/get-by-id.user.repository.protocol'
 import { type UpdateUserRepository } from '../../../../application/repositories/user/protocols/update.user.repository.protocol'
+import { type DeleteUserRepository } from '../../../../application/repositories/user/protocols/delete.user.repository.protocol'
 
 export class UserRepositoryTypeORM implements AddUserRepository,
-    GetByEmailUserRepository, GetUserRepository, GetByIdUserRepository, UpdateUserRepository {
+    GetByEmailUserRepository, GetUserRepository, GetByIdUserRepository, UpdateUserRepository, DeleteUserRepository {
     private readonly repository: Repository<ObjectLiteral>
 
     constructor () {
@@ -54,6 +55,16 @@ export class UserRepositoryTypeORM implements AddUserRepository,
         const updatedUser = await this.repository.update(id, data)
 
         if (updatedUser.affected === 1) {
+            return true
+        }
+
+        return false
+    }
+
+    async delete (id: string): Promise<boolean> {
+        const deletedUser = await this.repository.delete(id)
+
+        if (deletedUser.affected === 1) {
             return true
         }
 
