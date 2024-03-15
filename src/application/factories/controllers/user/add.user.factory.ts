@@ -4,11 +4,13 @@ import { UserRepositoryTypeORM } from '../../../../infra/data/typeorm/repositori
 import { AddUserController } from '../../../controllers/user/add.user.controller'
 import { AddUserUseCase } from '../../../usecases/user/add.user.usecase'
 import { logControllerFactory } from '../log/add-error.log.factory'
+import { addUserValidation } from './add.user.validation.factory'
 
 export const AddUserControllerFactory = (): Controller => {
     const hasher = new BcryptAdapter()
     const userRepo = new UserRepositoryTypeORM()
     const addUser = new AddUserUseCase(userRepo, userRepo, hasher)
-    const addUserController = new AddUserController(addUser)
+
+    const addUserController = new AddUserController(addUser, addUserValidation())
     return logControllerFactory(addUserController)
 }
