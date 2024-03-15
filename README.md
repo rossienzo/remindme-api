@@ -1,3 +1,3 @@
-# Locação API
+# RemindMe API
 
-Aplicação backend para locação de ônibus.
+Aplicação backend para lembretes.
