@@ -1,11 +1,11 @@
 import schemas from './schemas'
-import { authSchema } from './baseSchemas/auth-schema'
 import { BadRequestComponent } from './components/bad-request-component'
 import { ServerErrorComponent } from './components/server-error-component'
+import { AuthSchema } from './baseSchemas/auth-schema'
 
 export default {
     securitySchemes: {
-        authKeyApi: authSchema
+        bearerAuth: AuthSchema
     },
     schemas,
     // HTTP Errors

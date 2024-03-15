@@ -23,7 +23,7 @@ export class User {
     @UpdateDateColumn({ name: 'upload_at', type: 'timestamp' })
         updatedAt?: Date
 
-    @ManyToOne(() => Role, role => role.id, { nullable: false, eager: true })
+    @ManyToOne(() => Role, role => role.users, { nullable: false, eager: true })
     @JoinColumn({ name: 'role_id' })
         role: Role
 
