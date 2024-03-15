@@ -1,10 +1,10 @@
 import { type UseCase } from '../../../domain/protocols/usecase.protocol'
-import { type FindByEmailUserRepository } from '../../repositories/user/protocols/find-by-email.user.repository.protocol'
 import { type Comparer } from '../../protocols/cryptography/comparer.protocol'
 import { type Encrypter } from '../../protocols/cryptography/encrypter.protocol'
 import { type AddAuthenticationRepository } from '../../repositories/token/protocols/add.authentication.repository.protocol'
 import { type GetByIdAuthenticationRepository } from '../../repositories/token/protocols/get-by-id.authentication.repository.protocol'
 import { type UpdateAuthenticationRepository } from '../../repositories/token/protocols/update.authentication.protocol.ts'
+import { type GetByEmailUserRepository } from '../../repositories/user/protocols/get-by-email.user.repository.protocol'
 
 export interface LoginDTO {
     email: string
@@ -18,7 +18,7 @@ export interface LoginResponse {
 
 export class LoginUseCase implements UseCase {
     constructor (
-        private readonly findByEmailRepository: FindByEmailUserRepository,
+        private readonly getByEmailRepository: GetByEmailUserRepository,
         private readonly addTokenRepository: AddAuthenticationRepository,
         private readonly getByIdUserTokenRepository: GetByIdAuthenticationRepository,
         private readonly updateTokenRepository: UpdateAuthenticationRepository,
@@ -27,7 +27,7 @@ export class LoginUseCase implements UseCase {
     ) {}
 
     async execute (data: LoginDTO): Promise<LoginResponse | null> {
-        const user = await this.findByEmailRepository.findByEmail(data.email)
+        const user = await this.getByEmailRepository.getByEmail(data.email)
 
         if (user) {
             const passwordMatch = await this.comparer.compare(data.password, user.password)
